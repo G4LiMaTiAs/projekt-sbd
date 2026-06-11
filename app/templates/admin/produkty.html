@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block tytul %}Produkty - Panel{% endblock %}
+
+{% block tresc %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h3>Zarzadzanie produktami</h3>
+  <button class="btn btn-primary" disabled title="W wersji z baza"><i class="bi bi-plus-lg"></i> Dodaj produkt</button>
+</div>
+
+<div class="table-responsive">
+  <table class="table table-hover align-middle">
+    <thead class="table-light">
+      <tr><th>ID</th><th>Nazwa</th><th>Cena</th><th>Stan</th><th>Kategoria</th><th>Aktywny</th><th></th></tr>
+    </thead>
+    <tbody>
+      {% for p in produkty %}
+        <tr class="{{ 'table-secondary' if p.aktywny == 'N' }}">
+          <td>{{ p.id_produktu }}</td>
+          <td>{{ p.nazwa }}</td>
+          <td>{{ "%.2f"|format(p.cena) }} zl</td>
+          <td>
+            {% if p.stan_magazynowy == 0 %}
+              <span class="badge bg-danger">0</span>
+            {% elif p.stan_magazynowy < 5 %}
+              <span class="badge bg-warning text-dark">{{ p.stan_magazynowy }}</span>
+            {% else %}
+              {{ p.stan_magazynowy }}
+            {% endif %}
+          </td>
+          <td>
+            {% for k in kategorie if k.id_kategorii == p.id_kategorii %}{{ k.nazwa }}{% endfor %}
+          </td>
+          <td>
+            {% if p.aktywny == 'T' %}<span class="badge bg-success">T</span>
+            {% else %}<span class="badge bg-secondary">N</span>{% endif %}
+          </td>
+          <td>
+            <button class="btn btn-sm btn-outline-secondary" disabled><i class="bi bi-pencil"></i></button>
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+<p class="text-muted small">Edycja i dodawanie produktow zostanie podpiete do pakietow PL/SQL w wersji z baza.</p>
+{% endblock %}

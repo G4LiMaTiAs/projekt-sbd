@@ -1,0 +1,19 @@
+{# karta pojedynczego produktu - uzywana w katalogu i na stronie glownej #}
+<div class="card karta-produkt">
+  <div class="zdjecie-placeholder"><i class="bi bi-box-seam"></i></div>
+  <div class="card-body d-flex flex-column">
+    <h6 class="card-title">{{ p.nazwa }}</h6>
+    <p class="card-text small text-muted flex-grow-1">{{ p.opis[:70] }}{% if p.opis|length > 70 %}...{% endif %}</p>
+    <div class="d-flex justify-content-between align-items-center mb-2">
+      <span class="fw-bold fs-5">{{ "%.2f"|format(p.cena) }} zl</span>
+      {% if p.stan_magazynowy > 0 %}
+        <span class="badge bg-success">Dostepny</span>
+      {% else %}
+        <span class="badge bg-secondary">Brak</span>
+      {% endif %}
+    </div>
+    <a href="{{ url_for('produkt', pid=p.id_produktu) }}" class="btn btn-sm btn-outline-primary">
+      Zobacz szczegoly
+    </a>
+  </div>
+</div>

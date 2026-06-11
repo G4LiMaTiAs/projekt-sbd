@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% block tytul %}Rejestracja - TechSklep{% endblock %}
+
+{% block tresc %}
+<div class="row justify-content-center">
+  <div class="col-md-7">
+    <div class="card shadow-sm">
+      <div class="card-body p-4">
+        <h4 class="card-title mb-3">Zaloz konto</h4>
+        <form method="post">
+          <div class="row g-3">
+            <div class="col-md-6">
+              <label class="form-label">Imie</label>
+              <input type="text" name="imie" class="form-control" required>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Nazwisko</label>
+              <input type="text" name="nazwisko" class="form-control" required>
+            </div>
+            <div class="col-12">
+              <label class="form-label">Email</label>
+              <input type="email" name="email" class="form-control" required>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Haslo</label>
+              <input type="password" name="haslo" class="form-control" required>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Powtorz haslo</label>
+              <input type="password" name="haslo2" class="form-control" required>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Telefon</label>
+              <input type="text" name="telefon" class="form-control">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Miasto</label>
+              <input type="text" name="miasto" class="form-control">
+            </div>
+            <div class="col-md-8">
+              <label class="form-label">Ulica</label>
+              <input type="text" name="ulica" class="form-control">
+            </div>
+            <div class="col-md-4">
+              <label class="form-label">Kod pocztowy</label>
+              <input type="text" name="kod" class="form-control" placeholder="00-000">
+            </div>
+          </div>
+          <button class="btn btn-primary w-100 mt-3">Zarejestruj sie</button>
+        </form>
+        <p class="text-center mt-3 mb-0 small">
+          Masz juz konto? <a href="{{ url_for('logowanie') }}">Zaloguj sie</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

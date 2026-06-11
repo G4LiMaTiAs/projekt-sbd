@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block tytul %}Koszyk - TechSklep{% endblock %}
+
+{% block tresc %}
+<h3 class="mb-3"><i class="bi bi-cart"></i> Twoj koszyk</h3>
+
+{% if pozycje %}
+  <div class="table-responsive">
+    <table class="table align-middle">
+      <thead>
+        <tr><th>Produkt</th><th>Cena</th><th>Ilosc</th><th>Wartosc</th><th></th></tr>
+      </thead>
+      <tbody>
+        {% for poz in pozycje %}
+          <tr>
+            <td>{{ poz.produkt.nazwa }}</td>
+            <td>{{ "%.2f"|format(poz.produkt.cena) }} zl</td>
+            <td>{{ poz.ilosc }}</td>
+            <td class="fw-bold">{{ "%.2f"|format(poz.wartosc) }} zl</td>
+            <td>
+              <form action="{{ url_for('koszyk_usun', pid=poz.produkt.id_produktu) }}" method="post">
+                <button class="btn btn-sm btn-outline-danger"><i class="bi bi-trash"></i></button>
+              </form>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+      <tfoot>
+        <tr>
+          <td colspan="3" class="text-end fw-bold">Razem:</td>
+          <td class="fw-bold fs-5 text-primary">{{ "%.2f"|format(suma) }} zl</td>
+          <td></td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+
+  <div class="d-flex justify-content-between">
+    <a href="{{ url_for('katalog') }}" class="btn btn-outline-secondary">Kontynuuj zakupy</a>
+    <a href="{{ url_for('zamowienie') }}" class="btn btn-success">Przejdz do zamowienia <i class="bi bi-arrow-right"></i></a>
+  </div>
+{% else %}
+  <div class="alert alert-info">Koszyk jest pusty. <a href="{{ url_for('katalog') }}">Przejdz do katalogu</a></div>
+{% endif %}
+{% endblock %}

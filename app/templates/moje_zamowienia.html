@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block tytul %}Moje zamowienia - TechSklep{% endblock %}
+
+{% set kolory = {'NOWE':'secondary','OPLACONE':'info','WYSLANE':'primary','DOSTARCZONE':'success','ANULOWANE':'danger'} %}
+
+{% block tresc %}
+<h3 class="mb-3">Moje zamowienia</h3>
+
+{% if zamowienia %}
+  {% for z in zamowienia %}
+    <div class="card mb-3">
+      <div class="card-header d-flex justify-content-between align-items-center">
+        <span>Zamowienie <strong>#{{ z.id_zamowienia }}</strong> z dnia {{ z.data_zamowienia }}</span>
+        <span class="badge bg-{{ kolory[z.status] }}">{{ z.status }}</span>
+      </div>
+      <div class="card-body">
+        <ul class="list-unstyled mb-2">
+          {% for poz in pozycje.get(z.id_zamowienia, []) %}
+            <li>{{ poz.nazwa }} &times; {{ poz.ilosc }} &mdash; {{ "%.2f"|format(poz.cena_jednostkowa) }} zl</li>
+          {% endfor %}
+        </ul>
+        <div class="d-flex justify-content-between">
+          <small class="text-muted">{{ z.adres_dostawy }}</small>
+          <strong>Suma: {{ "%.2f"|format(z.suma) }} zl</strong>
+        </div>
+      </div>
+    </div>
+  {% endfor %}
+{% else %}
+  <div class="alert alert-info">Nie masz jeszcze zadnych zamowien.</div>
+{% endif %}
+{% endblock %}

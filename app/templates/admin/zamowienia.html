@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block tytul %}Zamowienia - Panel{% endblock %}
+
+{% set kolory = {'NOWE':'secondary','OPLACONE':'info','WYSLANE':'primary','DOSTARCZONE':'success','ANULOWANE':'danger'} %}
+
+{% block tresc %}
+<h3 class="mb-3">Zamowienia</h3>
+
+<div class="table-responsive">
+  <table class="table table-hover align-middle">
+    <thead class="table-light">
+      <tr><th>#</th><th>Klient</th><th>Data</th><th>Suma</th><th>Status</th><th>Zmien status</th></tr>
+    </thead>
+    <tbody>
+      {% for z in zamowienia %}
+        <tr>
+          <td>{{ z.id_zamowienia }}</td>
+          <td>{{ z.klient }}</td>
+          <td>{{ z.data_zamowienia }}</td>
+          <td>{{ "%.2f"|format(z.suma) }} zl</td>
+          <td><span class="badge bg-{{ kolory[z.status] }}">{{ z.status }}</span></td>
+          <td>
+            <form action="{{ url_for('admin_zmien_status', zid=z.id_zamowienia) }}" method="post" class="d-flex gap-1">
+              <select name="status" class="form-select form-select-sm" style="width:auto">
+                {% for s in statusy %}
+                  <option value="{{ s }}" {{ 'selected' if s == z.status }}>{{ s }}</option>
+                {% endfor %}
+              </select>
+              <button class="btn btn-sm btn-primary">Zapisz</button>
+            </form>
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

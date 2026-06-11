@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% block tytul %}{{ p.nazwa }} - TechSklep{% endblock %}
+
+{% block tresc %}
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{{ url_for('katalog') }}">Katalog</a></li>
+    {% if kategoria %}
+      <li class="breadcrumb-item"><a href="{{ url_for('katalog', kategoria=kategoria.id_kategorii) }}">{{ kategoria.nazwa }}</a></li>
+    {% endif %}
+    <li class="breadcrumb-item active">{{ p.nazwa }}</li>
+  </ol>
+</nav>
+
+<div class="row g-4">
+  <div class="col-md-5">
+    <div class="zdjecie-placeholder" style="height: 280px; font-size: 5rem;">
+      <i class="bi bi-box-seam"></i>
+    </div>
+  </div>
+  <div class="col-md-7">
+    <h2>{{ p.nazwa }}</h2>
+    {% if srednia %}
+      <p class="mb-1">
+        <span class="gwiazdki">
+          {% for i in range(1,6) %}<i class="bi bi-star{{ '-fill' if i <= srednia|round(0,'floor') }}"></i>{% endfor %}
+        </span>
+        <span class="text-muted">{{ srednia }} / 5 ({{ recenzje|length }} opinii)</span>
+      </p>
+    {% endif %}
+    <p class="text-muted">{{ p.opis }}</p>
+    <h3 class="text-primary">{{ "%.2f"|format(p.cena) }} zl</h3>
+
+    {% if p.stan_magazynowy > 0 %}
+      <p class="text-success"><i class="bi bi-check-circle"></i> Na stanie: {{ p.stan_magazynowy }} szt.</p>
+      <form action="{{ url_for('koszyk_dodaj', pid=p.id_produktu) }}" method="post">
+        <button class="btn btn-primary btn-lg"><i class="bi bi-cart-plus"></i> Dodaj do koszyka</button>
+      </form>
+    {% else %}
+      <p class="text-danger"><i class="bi bi-x-circle"></i> Produkt niedostepny</p>
+      <button class="btn btn-secondary btn-lg" disabled>Brak na stanie</button>
+    {% endif %}
+  </div>
+</div>
+
+<hr class="my-4">
+
+<h4>Opinie klientow</h4>
+{% if recenzje %}
+  {% for r in recenzje %}
+    <div class="card mb-2">
+      <div class="card-body py-2">
+        <div class="d-flex justify-content-between">
+          <strong>{{ r.imie_klienta }}</strong>
+          <small class="text-muted">{{ r.data_dodania }}</small>
+        </div>
+        <span class="gwiazdki">
+          {% for i in range(1,6) %}<i class="bi bi-star{{ '-fill' if i <= r.ocena }}"></i>{% endfor %}
+        </span>
+        <p class="mb-0">{{ r.tresc }}</p>
+      </div>
+    </div>
+  {% endfor %}
+{% else %}
+  <p class="text-muted">Brak opinii o tym produkcie.</p>
+{% endif %}
+{% endblock %}

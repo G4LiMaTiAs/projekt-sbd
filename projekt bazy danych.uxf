@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="14.3.0">
+  <zoom_level>10</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates><x>40</x><y>70</y><w>200</w><h>110</h></coordinates>
+    <panel_attributes>*KATEGORIE*
+halign=center
+--
+_id_kategorii_
+--
+nazwa
+opis
+id_rodzica (FK)</panel_attributes>
+    <additional_attributes></additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates><x>40</x><y>240</y><w>200</w><h>250</h></coordinates>
+    <panel_attributes>*KLIENCI*
+halign=center
+--
+_id_klienta_
+--
+email
+haslo_hash
+imie
+nazwisko
+telefon
+adres_ulica
+adres_miasto
+adres_kod
+data_rejestracji
+aktywny
+rola</panel_attributes>
+    <additional_attributes></additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates><x>40</x><y>550</y><w>200</w><h>160</h></coordinates>
+    <panel_attributes>*LOG_OPERACJI*
+halign=center
+--
+_id_logu_
+--
+uzytkownik
+operacja
+nazwa_tabeli
+id_rekordu
+data_op
+szczegoly</panel_attributes>
+    <additional_attributes></additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates><x>310</x><y>40</y><w>200</w><h>180</h></coordinates>
+    <panel_attributes>*PRODUKTY*
+halign=center
+--
+_id_produktu_
+--
+nazwa
+opis
+cena
+stan_magazynowy
+id_kategorii (FK)
+aktywny
+data_dodania</panel_attributes>
+    <additional_attributes></additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates><x>310</x><y>280</y><w>200</w><h>150</h></coordinates>
+    <panel_attributes>*RECENZJE*
+halign=center
+--
+_id_recenzji_
+--
+id_produktu (FK)
+id_klienta (FK)
+ocena
+tresc
+data_dodania</panel_attributes>
+    <additional_attributes></additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates><x>310</x><y>490</y><w>200</w><h>150</h></coordinates>
+    <panel_attributes>*ZAMOWIENIA*
+halign=center
+--
+_id_zamowienia_
+--
+id_klienta (FK)
+data_zamowienia
+status
+suma
+adres_dostawy</panel_attributes>
+    <additional_attributes></additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates><x>580</x><y>160</y><w>200</w><h>130</h></coordinates>
+    <panel_attributes>*POZYCJE_ZAMOWIENIA*
+halign=center
+--
+_id_pozycji_
+--
+id_zamowienia (FK)
+id_produktu (FK)
+ilosc
+cena_jednostkowa</panel_attributes>
+    <additional_attributes></additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates><x>580</x><y>500</y><w>200</w><h>150</h></coordinates>
+    <panel_attributes>*PLATNOSCI*
+halign=center
+--
+_id_platnosci_
+--
+id_zamowienia (FK)
+kwota
+metoda
+status
+data_platnosci</panel_attributes>
+    <additional_attributes></additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates><x>230</x><y>120</y><w>90</w><h>30</h></coordinates>
+    <panel_attributes>lt=-
+m1=1
+m2=∞</panel_attributes>
+    <additional_attributes>10;10;80;20</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates><x>70</x><y>30</y><w>110</w><h>50</h></coordinates>
+    <panel_attributes>lt=-
+m1=1
+m2=∞</panel_attributes>
+    <additional_attributes>10;40;10;10;100;10;100;40</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates><x>230</x><y>440</y><w>90</w><h>130</h></coordinates>
+    <panel_attributes>lt=-
+m1=1
+m2=∞</panel_attributes>
+    <additional_attributes>10;10;80;120</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates><x>230</x><y>330</y><w>90</w><h>20</h></coordinates>
+    <panel_attributes>lt=-
+m1=1
+m2=∞</panel_attributes>
+    <additional_attributes>10;10;80;10</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates><x>400</x><y>210</y><w>20</w><h>80</h></coordinates>
+    <panel_attributes>lt=-
+m1=1
+m2=∞</panel_attributes>
+    <additional_attributes>10;10;10;70</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates><x>500</x><y>120</y><w>90</w><h>90</h></coordinates>
+    <panel_attributes>lt=-
+m1=1
+m2=∞</panel_attributes>
+    <additional_attributes>10;10;80;80</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates><x>500</x><y>260</y><w>90</w><h>280</h></coordinates>
+    <panel_attributes>lt=-
+m1=1
+m2=∞</panel_attributes>
+    <additional_attributes>10;270;80;10</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates><x>500</x><y>550</y><w>90</w><h>40</h></coordinates>
+    <panel_attributes>lt=-
+m1=1
+m2=∞</panel_attributes>
+    <additional_attributes>10;30;80;10</additional_attributes>
+  </element>
+  <element>
+    <id>UMLNote</id>
+    <coordinates><x>310</x><y>0</y><w>300</w><h>30</h></coordinates>
+    <panel_attributes>TechSklep - diagram zwiazkow encji (ERD)</panel_attributes>
+    <additional_attributes></additional_attributes>
+  </element>
+  <element>
+    <id>UMLNote</id>
+    <coordinates><x>40</x><y>750</y><w>470</w><h>30</h></coordinates>
+    <panel_attributes>LOG_OPERACJI nie ma kluczy obcych - wypelniany przez triggery</panel_attributes>
+    <additional_attributes></additional_attributes>
+  </element>
+</diagram>

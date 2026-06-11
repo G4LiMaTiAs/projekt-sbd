@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block tytul %}Log operacji - Panel{% endblock %}
+
+{% set kolory = {'INSERT':'success','UPDATE':'warning','DELETE':'danger'} %}
+
+{% block tresc %}
+<h3 class="mb-3">Log operacji (audyt)</h3>
+<p class="text-muted small">Tabela LOG_OPERACJI - wpisy generowane automatycznie przez triggery audytowe.</p>
+
+<div class="table-responsive">
+  <table class="table table-sm table-striped">
+    <thead class="table-dark">
+      <tr><th>ID</th><th>Uzytkownik</th><th>Operacja</th><th>Tabela</th><th>ID rekordu</th><th>Data</th><th>Szczegoly</th></tr>
+    </thead>
+    <tbody>
+      {% for l in logi %}
+        <tr>
+          <td>{{ l.id_logu }}</td>
+          <td><code>{{ l.uzytkownik }}</code></td>
+          <td><span class="badge bg-{{ kolory[l.operacja] }} text-dark">{{ l.operacja }}</span></td>
+          <td>{{ l.nazwa_tabeli }}</td>
+          <td>{{ l.id_rekordu }}</td>
+          <td><small>{{ l.data_op }}</small></td>
+          <td><small>{{ l.szczegoly }}</small></td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

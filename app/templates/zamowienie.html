@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% block tytul %}Zamowienie - TechSklep{% endblock %}
+
+{% block tresc %}
+<h3 class="mb-3">Finalizacja zamowienia</h3>
+<form method="post">
+  <div class="row g-4">
+    <div class="col-md-7">
+      <div class="card mb-3">
+        <div class="card-header">Adres dostawy</div>
+        <div class="card-body">
+          <div class="mb-2">
+            <label class="form-label">Ulica i numer</label>
+            <input type="text" name="ulica" class="form-control" required>
+          </div>
+          <div class="row g-2">
+            <div class="col-8">
+              <label class="form-label">Miasto</label>
+              <input type="text" name="miasto" class="form-control" required>
+            </div>
+            <div class="col-4">
+              <label class="form-label">Kod</label>
+              <input type="text" name="kod" class="form-control" placeholder="00-000" required>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">Metoda platnosci</div>
+        <div class="card-body">
+          {% for m in metody %}
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="metoda" value="{{ m }}"
+                     id="m{{ loop.index }}" {{ 'checked' if loop.first }}>
+              <label class="form-check-label" for="m{{ loop.index }}">{{ m }}</label>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-5">
+      <div class="card">
+        <div class="card-header">Podsumowanie</div>
+        <ul class="list-group list-group-flush">
+          {% for poz in pozycje %}
+            <li class="list-group-item d-flex justify-content-between">
+              <span>{{ poz.produkt.nazwa }} x{{ poz.ilosc }}</span>
+              <span>{{ "%.2f"|format(poz.wartosc) }} zl</span>
+            </li>
+          {% endfor %}
+          <li class="list-group-item d-flex justify-content-between fw-bold">
+            <span>Razem</span>
+            <span class="text-primary">{{ "%.2f"|format(suma) }} zl</span>
+          </li>
+        </ul>
+        <div class="card-body">
+          <button class="btn btn-success w-100">Zloz zamowienie</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+{% endblock %}

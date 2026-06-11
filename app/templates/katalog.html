@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block tytul %}Katalog - TechSklep{% endblock %}
+
+{% block tresc %}
+<div class="row">
+  <!-- panel boczny z kategoriami -->
+  <div class="col-md-3 mb-3">
+    <div class="list-group">
+      <a href="{{ url_for('katalog') }}"
+         class="list-group-item list-group-item-action {{ 'active' if not wybrana }}">
+        Wszystkie produkty
+      </a>
+      {% for k in kategorie if k.id_rodzica is none %}
+        <div class="list-group-item fw-bold bg-light">{{ k.nazwa }}</div>
+        {% for sub in kategorie if sub.id_rodzica == k.id_kategorii %}
+          <a href="{{ url_for('katalog', kategoria=sub.id_kategorii) }}"
+             class="list-group-item list-group-item-action ps-4 {{ 'active' if wybrana and wybrana.id_kategorii == sub.id_kategorii }}">
+            {{ sub.nazwa }}
+          </a>
+        {% endfor %}
+      {% endfor %}
+    </div>
+  </div>
+
+  <!-- lista produktow -->
+  <div class="col-md-9">
+    <h4 class="mb-3">
+      {% if wybrana %}{{ wybrana.nazwa }}{% else %}Wszystkie produkty{% endif %}
+      <small class="text-muted">({{ produkty|length }})</small>
+    </h4>
+
+    {% if produkty %}
+      <div class="row g-3">
+        {% for p in produkty %}
+          <div class="col-12 col-sm-6 col-lg-4">
+            {% include "_karta_produktu.html" %}
+          </div>
+        {% endfor %}
+      </div>
+    {% else %}
+      <div class="alert alert-info">Brak produktow w tej kategorii.</div>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

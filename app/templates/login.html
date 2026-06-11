@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block tytul %}Logowanie - TechSklep{% endblock %}
+
+{% block tresc %}
+<div class="row justify-content-center">
+  <div class="col-md-5">
+    <div class="card shadow-sm">
+      <div class="card-body p-4">
+        <h4 class="card-title mb-3">Logowanie</h4>
+        <form method="post">
+          <div class="mb-3">
+            <label class="form-label">Email</label>
+            <input type="email" name="email" class="form-control" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Haslo</label>
+            <input type="password" name="haslo" class="form-control" required>
+          </div>
+          <button class="btn btn-primary w-100">Zaloguj sie</button>
+        </form>
+        <hr>
+        <p class="text-center mb-0 small">
+          Nie masz konta? <a href="{{ url_for('rejestracja') }}">Zarejestruj sie</a>
+        </p>
+        <div class="alert alert-light border mt-3 small mb-0">
+          <strong>Konta testowe:</strong><br>
+          klient: anna.kowalska@example.com / haslo123<br>
+          pracownik: pracownik@techsklep.pl / praca123<br>
+          admin: admin@techsklep.pl / admin123
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
