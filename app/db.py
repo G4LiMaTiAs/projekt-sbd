@@ -184,3 +184,30 @@ def zmien_status(id_zamowienia, nowy_status):
         cur = con.cursor()
         cur.callproc("P_ZAMOWIENIA.zmien_status", [id_zamowienia, nowy_status])
         con.commit()
+
+
+def dodaj_produkt(nazwa, opis, cena, stan, id_kategorii):
+    # tworzy nowy produkt przez pakiet P_PRODUKTY, zwraca jego ID
+    with polaczenie() as con:
+        cur = con.cursor()
+        v_id = cur.callfunc("P_PRODUKTY.dodaj_produkt", oracledb.NUMBER,
+                            [nazwa, opis, cena, stan, id_kategorii])
+        con.commit()
+        return int(v_id)
+
+
+def edytuj_produkt(id_produktu, nazwa, opis, cena, stan, id_kategorii, aktywny):
+    # aktualizuje istniejacy produkt przez pakiet P_PRODUKTY
+    with polaczenie() as con:
+        cur = con.cursor()
+        cur.callproc("P_PRODUKTY.edytuj_produkt",
+                     [id_produktu, nazwa, opis, cena, stan, id_kategorii, aktywny])
+        con.commit()
+
+
+def zmien_aktywnosc_produktu(id_produktu, aktywny):
+    # wlacza/wylacza produkt w sklepie (T/N)
+    with polaczenie() as con:
+        cur = con.cursor()
+        cur.callproc("P_PRODUKTY.zmien_aktywnosc", [id_produktu, aktywny])
+        con.commit()

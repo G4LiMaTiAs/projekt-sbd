@@ -37,6 +37,17 @@ def wymaga_personelu(f):
     return wrapper
 
 
+def wymaga_admina(f):
+    @wraps(f)
+    def wrapper(*args, **kwargs):
+        u = session.get("uzytkownik")
+        if not u or u["rola"] != "ADMIN":
+            flash("Zarzadzanie produktami dostepne tylko dla administratora.", "danger")
+            return redirect(url_for("admin_produkty"))
+        return f(*args, **kwargs)
+    return wrapper
+
+
 @app.context_processor
 def wstrzyknij_koszyk():
     koszyk = session.get("koszyk", {})
@@ -225,6 +236,52 @@ def admin_panel():
 @wymaga_personelu
 def admin_produkty():
     return render_template("admin/produkty.html", produkty=db.wszystkie_produkty(),
+                           kategorie=db.lista_kategorii())
+
+
+@app.route("/admin/produkty/dodaj", methods=["GET", "POST"])
+@wymaga_admina
+def admin_produkt_dodaj():
+    if request.method == "POST":
+        try:
+            db.dodaj_produkt(
+                request.form.get("nazwa"),
+                request.form.get("opis"),
+                float(request.form.get("cena")),
+                int(request.form.get("stan_magazynowy")),
+                int(request.form.get("id_kategorii")),
+            )
+            flash("Dodano produkt.", "success")
+            return redirect(url_for("admin_produkty"))
+        except Exception as e:
+            flash("Nie udalo sie dodac produktu: " + db.czysty_blad(e), "danger")
+    return render_template("admin/produkt_form.html", produkt=None,
+                           kategorie=db.lista_kategorii())
+
+
+@app.route("/admin/produkty/<int:pid>/edytuj", methods=["GET", "POST"])
+@wymaga_admina
+def admin_produkt_edytuj(pid):
+    p = db.produkt(pid)
+    if not p:
+        flash("Nie znaleziono produktu.", "danger")
+        return redirect(url_for("admin_produkty"))
+    if request.method == "POST":
+        try:
+            db.edytuj_produkt(
+                pid,
+                request.form.get("nazwa"),
+                request.form.get("opis"),
+                float(request.form.get("cena")),
+                int(request.form.get("stan_magazynowy")),
+                int(request.form.get("id_kategorii")),
+                request.form.get("aktywny", "T"),
+            )
+            flash("Zapisano zmiany produktu.", "success")
+            return redirect(url_for("admin_produkty"))
+        except Exception as e:
+            flash("Nie udalo sie zapisac zmian: " + db.czysty_blad(e), "danger")
+    return render_template("admin/produkt_form.html", produkt=p,
                            kategorie=db.lista_kategorii())
 
 

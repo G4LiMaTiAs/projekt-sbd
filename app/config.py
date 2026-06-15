@@ -5,12 +5,12 @@
 
 import os
 
-# dane logowania do bazy - ZMIEN na swoje
-DB_USER     = os.environ.get("DB_USER", "sklep")          # np. twoj uzytkownik schematu
-DB_PASSWORD = os.environ.get("DB_PASSWORD", "sklep")      # haslo do bazy
+# dane logowania do bazy
+DB_USER     = os.environ.get("DB_USER", "id_116425")
+DB_PASSWORD = os.environ.get("DB_PASSWORD", "mateusz_lisowski")
 
-# DSN: host:port/service_name  (typowo dla Oracle 19c XE -> XEPDB1)
-DB_DSN      = os.environ.get("DB_DSN", "localhost:1521/XEPDB1")
+# adres bazy - serwer zdalny 212.33.90.212, port 1521, SID v732
+DB_DSN      = os.environ.get("DB_DSN", "(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=212.33.90.212)(PORT=1521))(CONNECT_DATA=(SID=v732)))")
 
 # klucz sesji Flaska
 SECRET_KEY  = os.environ.get("SECRET_KEY", "tajny-klucz-dev-zmienic")
